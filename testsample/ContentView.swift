@@ -8,6 +8,8 @@ struct ContentView: View {
     @State private var isCardVisible = true
     //カードがスワイプされる際に水平方向に飛ばすための値
     @State private var cardOffset: CGFloat = 0
+    
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ZStack {
@@ -48,6 +50,9 @@ struct ContentView: View {
         }
         .onAppear {
             self.currentIndex = cardCount - 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+               
+            }
         }
     }
 
@@ -57,8 +62,11 @@ struct ContentView: View {
         if currentIndex < 0 {
             currentIndex = 0
             isCardVisible = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                presentationMode.wrappedValue.dismiss()
+            }
+            print("swipe left")
         }
-        print("swipe left")
     }
 
     private func handleSwipeRight() {
@@ -67,6 +75,9 @@ struct ContentView: View {
         if currentIndex < 0 {
             currentIndex = 0
             isCardVisible = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                presentationMode.wrappedValue.dismiss()
+            }
         }
         print("swipe right")
     }
